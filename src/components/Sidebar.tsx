@@ -13,7 +13,7 @@ import {
   Plus,
   X,
 } from 'lucide-react';
-import { TabType, DirectoryStats, AppSettings } from '../types';
+import { TabType, DirectoryStats, AppSettings, User as AppUser } from '../types';
 import { cn } from '../lib/utils';
 import { Language, getTranslation } from '../lib/i18n';
 
@@ -29,6 +29,7 @@ interface SidebarProps {
   setSidebarOpen?: (open: boolean) => void;
   mobileOpen?: boolean;
   setMobileOpen?: (open: boolean) => void;
+  user?: AppUser | null;
   isAdmin?: boolean;
   onOpenLogin?: () => void;
   onOpenAdminLogin?: () => void;
@@ -48,6 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setSidebarOpen,
   mobileOpen,
   setMobileOpen,
+  user,
   isAdmin = false,
   onOpenLogin,
   onOpenAdminLogin,
@@ -127,7 +129,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: Settings,
     },
   ];
-  const filteredNavItems = !isAdmin
+  const filteredNavItems = !user
     ? navItems.filter(item => item.id !== 'profile')
     : navItems;
 
@@ -228,39 +230,58 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Privacy Guarantee & Mode Status Footer */}
       <div className="p-3 border-t border-slate-800 bg-slate-950/40 space-y-2">
         <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            <div className={cn(
-              "w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0",
-              isAdmin ? "bg-emerald-950/70 border border-emerald-800/50 text-emerald-400" : "bg-amber-950/70 border border-amber-800/50 text-amber-400"
-            )}>
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-bold text-slate-200 truncate">
-                {isAdmin ? 'Admin Mode' : 'User Mode'}
-              </p>
-              <p className="text-[10px] text-slate-400 truncate">
-                {isAdmin ? 'Full Access' : 'Own Profile Access'}
-              </p>
-            </div>
-          </div>
-
-          {onLogout ? (
-            <button
-              onClick={onLogout}
-              className="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[10px] font-bold whitespace-nowrap transition-colors"
-            >
-              {lang === 'bn' ? 'বের হন' : 'Logout'}
-            </button>
-          ) : onOpenLogin ? (
-            <button
-              onClick={onOpenLogin}
-              className="px-3 py-1.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-[11px] font-bold whitespace-nowrap transition-all shadow-xs cursor-pointer active:scale-[0.98]"
-            >
-              {lang === 'bn' ? 'লগইন' : 'Login'}
-            </button>
-          ) : null}
-  
+          {user ? (
+            <>
+              <div className="flex items-center gap-2 min-w-0">
+                <div className={cn(
+                  "w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0",
+                  isAdmin ? "bg-emerald-950/70 border border-emerald-800/50 text-emerald-400" : "bg-primary-950/70 border border-primary-800/50 text-primary-400"
+                )}>
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[11px] font-bold text-slate-200 truncate">
+                    {isAdmin ? 'Admin Mode' : (user.fullName || 'User Mode')}
+                  </p>
+                  <p className="text-[10px] text-slate-400 truncate">
+                    {isAdmin ? 'Full Access' : (user.email || 'Own Profile Access')}
+                  </p>
+                </div>
+              </div>
+              {onLogout && (
+                <button
+                  onClick={onLogout}
+                  className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[10px] font-bold whitespace-nowrap transition-colors cursor-pointer"
+                >
+                  {lang === 'bn' ? 'বের হন' : 'Logout'}
+                </button>
+              )}
+            </>
+          ) : (
+            <>
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-slate-800/80 border border-slate-700/60 text-slate-400">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[11px] font-bold text-slate-200 truncate">
+                    {lang === 'bn' ? 'পাবলিক ভিউয়ার' : 'Public Visitor'}
+                  </p>
+                  <p className="text-[10px] text-slate-400 truncate">
+                    {lang === 'bn' ? 'লগইন ছাড়াই ব্রাউজ করছেন' : 'Public Directory'}
+                  </p>
+                </div>
+              </div>
+              {onOpenLogin && (
+                <button
+                  onClick={onOpenLogin}
+                  className="px-3 py-1.5 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-[11px] font-bold whitespace-nowrap transition-all shadow-xs cursor-pointer active:scale-[0.98]"
+                >
+                  {lang === 'bn' ? 'লগইন' : 'Login'}
+                </button>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

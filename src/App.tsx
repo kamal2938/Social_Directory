@@ -178,14 +178,12 @@ export default function App() {
   }, [filters, activeTab]);
 
   useEffect(() => {
-    if (currentUser) {
-      fetchStatsAndTags();
-      fetchAllPeopleList();
-    }
+    fetchStatsAndTags();
+    fetchAllPeopleList();
   }, [currentUser]);
 
   useEffect(() => {
-    if (currentUser && (activeTab === 'people' || activeTab === 'favorites' || activeTab === 'archived')) {
+    if (activeTab === 'people' || activeTab === 'favorites' || activeTab === 'archived') {
       fetchPeople();
     }
   }, [fetchPeople, activeTab, filters, currentUser]);
@@ -207,13 +205,15 @@ export default function App() {
 
       try {
         const res = await api.getMe();
-        setCurrentUser(res.user);
-        if (!res.user) {
-          setShowAuth(true);
+        if (res.user && res.user.username !== 'viewer') {
+          setCurrentUser(res.user);
+        } else {
+          tokenStorage.clear();
+          setCurrentUser(null);
         }
       } catch (e) {
+        tokenStorage.clear();
         setCurrentUser(null);
-        setShowAuth(true);
       }
 
       // Preload the logo from Cloudinary before hiding the loading screen
@@ -237,7 +237,6 @@ export default function App() {
     // Listen for unauthorized events
     const handleUnauthorized = () => {
       setCurrentUser(null);
-      setShowAuth(true);
     };
     window.addEventListener('auth_unauthorized', handleUnauthorized);
     return () => window.removeEventListener('auth_unauthorized', handleUnauthorized);
@@ -400,25 +399,6 @@ export default function App() {
     showToast('Business card scanned! Review details and save.');
   };
 
-  if (showAuth && !isAuthChecking) {
-    return (
-      <AuthView
-        onLogin={(user) => {
-          setCurrentUser(user);
-          setShowAuth(false);
-          setActiveTab('profile');
-        }}
-        onCancel={() => {
-          setShowAuth(false);
-        }}
-        onOpenAdminLogin={() => {
-          setShowAuth(false);
-          setIsAdminLoginOpen(true);
-        }}
-      />
-    );
-  }
-
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased selection:bg-primary-500 selection:text-white relative">
       {/* Loading Overlay */}
@@ -452,15 +432,15 @@ export default function App() {
         }}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
+        user={currentUser}
         isAdmin={currentUser?.role === 'admin'}
         onOpenLogin={() => setShowAuth(true)}
         onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
-        onLogout={async () => {
+        onLogout={currentUser ? async () => {
           await api.logout();
           setCurrentUser(null);
-          setShowAuth(true);
-          showToast('Logged out successfully');
-        }}
+          showToast(lang === 'bn' ? 'সফলভাবে লগআউট হয়েছে' : 'Logged out successfully');
+        } : undefined}
         lang={lang}
       />
 
@@ -485,15 +465,15 @@ export default function App() {
             setQuickLogModal({ isOpen: true, mode: 'note' })
           }
           setSidebarOpen={setSidebarOpen}
+          user={currentUser}
           isAdmin={currentUser?.role === 'admin'}
           onOpenLogin={() => setShowAuth(true)}
           onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
-          onLogout={async () => {
+          onLogout={currentUser ? async () => {
             await api.logout();
             setCurrentUser(null);
-            setShowAuth(true);
-            showToast('Logged out successfully');
-          }}
+            showToast(lang === 'bn' ? 'সফলভাবে লগআউট হয়েছে' : 'Logged out successfully');
+          } : undefined}
           lang={lang}
           setLang={setLang}
         />
@@ -509,6 +489,7 @@ export default function App() {
                 setIsAddPersonOpen(true);
               }}
               onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
+              onOpenLogin={!currentUser ? () => setShowAuth(true) : undefined}
               isAdmin={currentUser?.role === 'admin'}
               lang={lang}
             />
@@ -708,6 +689,7 @@ export default function App() {
           setActiveTab={setActiveTab} 
           lang={lang} 
           isAdmin={currentUser?.role === 'admin'} 
+          user={currentUser}
         />
       </div>
 
@@ -822,6 +804,27 @@ export default function App() {
           fetchAllPeopleList();
         }}
       />
+
+      {/* User Login & Registration Modal */}
+      {showAuth && (
+        <AuthView
+          onLogin={(user) => {
+            setCurrentUser(user);
+            setShowAuth(false);
+            showToast(`Welcome back, ${user.fullName || user.username}!`);
+            fetchStatsAndTags();
+            fetchPeople();
+            fetchAllPeopleList();
+          }}
+          onCancel={() => {
+            setShowAuth(false);
+          }}
+          onOpenAdminLogin={() => {
+            setShowAuth(false);
+            setIsAdminLoginOpen(true);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -39,6 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   toggleDarkMode,
   theme,
   setTheme,
+  user,
   onOpenMobileMenu,
   setSidebarOpen,
   onOpenAddPerson,
@@ -167,49 +168,52 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           {/* User/Admin Login/Logout status */}
-          {isAdmin ? (
-            <div className="flex items-center gap-1.5">
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-bold shadow-2xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>{getTranslation(lang, 'adminActive')}</span>
-              </span>
-              {onLogout && (
-                <button
-                  id="navbar-logout-btn"
-                  onClick={onLogout}
-                  className="flex items-center gap-1 px-2.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 transition-colors"
-                  title="Log out"
-                >
-                  <LogOut className="w-3.5 h-3.5 text-slate-500" />
-                  <span className="hidden sm:inline">{getTranslation(lang, 'logout')}</span>
-                </button>
-              )}
-            </div>
-          ) : onLogout ? (
-            <div className="flex items-center gap-1.5">
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-primary-50 dark:bg-primary-950/60 border border-primary-200 dark:border-primary-800/60 text-primary-700 dark:text-primary-300 text-xs font-bold shadow-2xs">
-                <span>{lang === 'en' ? 'User Mode' : 'ইউজার মোড'}</span>
-              </span>
-              <button
-                id="navbar-logout-btn"
-                onClick={onLogout}
-                className="flex items-center gap-1 px-2.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 transition-colors"
-                title="Log out"
-              >
-                <LogOut className="w-3.5 h-3.5 text-slate-500" />
-                <span className="hidden sm:inline">{getTranslation(lang, 'logout')}</span>
-              </button>
-            </div>
+          {user ? (
+            isAdmin ? (
+              <div className="flex items-center gap-1.5">
+                <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-bold shadow-2xs">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <span>{getTranslation(lang, 'adminActive')}</span>
+                </span>
+                {onLogout && (
+                  <button
+                    id="navbar-logout-btn"
+                    onClick={onLogout}
+                    className="flex items-center gap-1 px-2.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
+                    title="Log out"
+                  >
+                    <LogOut className="w-3.5 h-3.5 text-slate-500" />
+                    <span className="hidden sm:inline">{getTranslation(lang, 'logout')}</span>
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-1.5">
+                <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-primary-50 dark:bg-primary-950/60 border border-primary-200 dark:border-primary-800/60 text-primary-700 dark:text-primary-300 text-xs font-bold shadow-2xs">
+                  <span>{user.fullName || (lang === 'en' ? 'User Mode' : 'ইউজার মোড')}</span>
+                </span>
+                {onLogout && (
+                  <button
+                    id="navbar-logout-btn"
+                    onClick={onLogout}
+                    className="flex items-center gap-1 px-2.5 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
+                    title="Log out"
+                  >
+                    <LogOut className="w-3.5 h-3.5 text-slate-500" />
+                    <span className="hidden sm:inline">{getTranslation(lang, 'logout')}</span>
+                  </button>
+                )}
+              </div>
+            )
           ) : onOpenLogin ? (
             <button
               id="navbar-user-login-btn"
               onClick={onOpenLogin}
-              className="flex items-center gap-1 px-2.5 py-2 bg-primary-600 hover:bg-primary-500 text-white rounded-xl text-xs sm:text-sm font-semibold shadow-xs transition-all active:scale-[0.98] cursor-pointer whitespace-nowrap shrink-0"
-              title="User Login"
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-primary-600 hover:bg-primary-500 text-white rounded-xl text-xs sm:text-sm font-semibold shadow-xs transition-all active:scale-[0.98] cursor-pointer whitespace-nowrap shrink-0"
+              title="Login"
             >
-              <LogIn className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white shrink-0" />
-              <span className="hidden sm:inline">{lang === 'en' ? 'User Login' : 'লগইন'}</span>
-              <span className="sm:hidden">{lang === 'en' ? 'Login' : 'লগইন'}</span>
+              <LogIn className="w-4 h-4 text-white shrink-0" />
+              <span>{lang === 'bn' ? 'লগইন' : 'Login'}</span>
             </button>
           ) : null}
 

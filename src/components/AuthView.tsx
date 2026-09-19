@@ -97,18 +97,26 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLogin, onCancel, onOpenAdm
   };
 
   return (
-    <div className="auth-page-wrapper bg-slate-50 dark:bg-slate-950 flex flex-col justify-center items-center min-h-screen p-4">
-      {onCancel && (
-        <button onClick={onCancel} className="absolute top-6 right-6 p-2 bg-slate-800 text-white rounded-full z-50 hover:bg-slate-700">
-          <X className="w-6 h-6" />
-        </button>
-      )}
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex justify-center items-center p-4">
+      {/* Click outside backdrop to cancel */}
+      <div className="fixed inset-0" onClick={onCancel} />
       
-      {/* Sliding Curved Container */}
-      <div
-        ref={containerRef}
-        className={`container auth-curved-container ${isActive ? 'active' : ''}`}
-      >
+      <div className="relative z-10">
+        {onCancel && (
+          <button
+            onClick={onCancel}
+            aria-label="Close login dialog"
+            className="absolute -top-12 right-0 md:-top-4 md:-right-12 p-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-full z-50 shadow-lg transition-all"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
+        
+        {/* Sliding Curved Container */}
+        <div
+          ref={containerRef}
+          className={`container auth-curved-container shadow-2xl ${isActive ? 'active' : ''}`}
+        >
         {/* ===================================================
             LOGIN FORM BOX (Initially on Right side)
             =================================================== */}
@@ -245,6 +253,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ onLogin, onCancel, onOpenAdm
             </button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

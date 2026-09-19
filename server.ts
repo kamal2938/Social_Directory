@@ -15,7 +15,7 @@ import crypto from 'crypto';
 import { createServer as createViteServer } from 'vite';
 import { storage, verifyPassword, hashPassword } from './server/storage.js';
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const SESSION_TOKENS = new Map<string, { userId: string; expiresAt: number }>();
 
 // Clean up expired sessions periodically
@@ -279,14 +279,6 @@ async function startServer() {
     const authHeader = req.headers.authorization;
     let token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
     let userId = getUserIdFromToken(token);
-
-    if (!userId) {
-      const viewerUser = await storage.findUserByUsername('viewer');
-      if (viewerUser) {
-        userId = viewerUser.id;
-        token = createToken(viewerUser.id);
-      }
-    }
 
     if (!userId) {
       res.status(401).json({ error: 'Not authenticated' });

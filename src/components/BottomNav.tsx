@@ -1,6 +1,6 @@
 import React from 'react';
 import { Home, Users, Settings, UserCircle, LayoutDashboard } from 'lucide-react';
-import { TabType } from '../types';
+import { TabType, User } from '../types';
 import { cn } from '../lib/utils';
 import { Language, getTranslation } from '../lib/i18n';
 
@@ -9,19 +9,21 @@ interface BottomNavProps {
   setActiveTab: (tab: TabType) => void;
   lang: Language;
   isAdmin?: boolean;
+  user?: User | null;
 }
 
 export const BottomNav: React.FC<BottomNavProps> = ({
   activeTab,
   setActiveTab,
   lang,
-  isAdmin
+  isAdmin,
+  user
 }) => {
   const tabs = [
     { id: 'home', icon: Home, label: getTranslation(lang, 'navHome') },
     ...(isAdmin ? [{ id: 'dashboard', icon: LayoutDashboard, label: getTranslation(lang, 'navDashboard') }] : []),
     { id: 'people', icon: Users, label: getTranslation(lang, 'navPeople') },
-    { id: 'profile', icon: UserCircle, label: getTranslation(lang, 'navProfile') || 'Profile' },
+    ...(user ? [{ id: 'profile', icon: UserCircle, label: getTranslation(lang, 'navProfile') || 'Profile' }] : []),
     { id: 'settings', icon: Settings, label: getTranslation(lang, 'navSettings') }
   ] as { id: TabType; icon: any; label: string }[];
 

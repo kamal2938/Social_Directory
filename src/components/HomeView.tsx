@@ -22,6 +22,7 @@ interface HomeViewProps {
   stats: DirectoryStats | null;
   onOpenAddPerson?: () => void;
   onOpenAdminLogin?: () => void;
+  onOpenLogin?: () => void;
   isAdmin?: boolean;
   lang: Language;
 }
@@ -31,6 +32,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   stats,
   onOpenAddPerson,
   onOpenAdminLogin,
+  onOpenLogin,
   isAdmin = false,
   lang,
 }) => {
@@ -150,6 +152,13 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 className="px-6 py-3 rounded-xl bg-primary-800/80 hover:bg-primary-800 text-white border border-white/20 font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer"
               >
                 <span>{getTranslation(lang, 'addPerson')}</span>
+              </button>
+            ) : onOpenLogin ? (
+              <button
+                onClick={onOpenLogin}
+                className="px-6 py-3 rounded-xl bg-primary-800/80 hover:bg-primary-800 text-white border border-white/20 font-semibold text-xs sm:text-sm transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <span>{lang === 'bn' ? 'লগইন করুন' : 'Sign In'}</span>
               </button>
             ) : (
               <button

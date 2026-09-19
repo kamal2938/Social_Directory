@@ -63,7 +63,7 @@ async function request<T>(endpoint: string, options: RequestInit = {}, isRetry =
     headers,
   });
 
-  if (response.status === 401 && !isRetry && !endpoint.includes('/api/auth/login') && !endpoint.includes('/api/auth/register')) {
+  if (response.status === 401 && !isRetry && !endpoint.includes('/api/auth/login') && !endpoint.includes('/api/auth/register') && !endpoint.includes('/api/auth/me')) {
     tokenStorage.clear();
     const newToken = await autoAuthenticate();
     if (newToken) {
@@ -137,11 +137,20 @@ export const api = {
   },
 
   getMe: async () => {
-    const data = await request<{ user: User; token?: string }>('/api/auth/me');
-    if (data.token) {
-      tokenStorage.set(data.token);
+    const token = tokenStorage.get();
+    if (!token) {
+      return { user: null };
     }
-    return data;
+    try {
+      const data = await request<{ user: User; token?: string }>('/api/auth/me');
+      if (data.token) {
+        tokenStorage.set(data.token);
+      }
+      return data;
+    } catch {
+      tokenStorage.clear();
+      return { user: null };
+    }
   },
 
   logout: async () => {
