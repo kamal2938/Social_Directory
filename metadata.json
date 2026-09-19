@@ -1,0 +1,6 @@
+{
+  "name": "Social Directory",
+  "description": "A private personal contact management and social CRM directory for organizing, searching, and managing personal and professional relationships.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

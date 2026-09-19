@@ -1,0 +1,178 @@
+{
+  "project_id": "social-directory-b460f",
+  "auth": {
+    "providers": [
+      "email"
+    ]
+  },
+  "database": {
+    "type": "firestore",
+    "collections": {
+      "users": {
+        "description": "User accounts managing the directory",
+        "document_id": "userId (from Firebase Auth)",
+        "fields": {
+          "email": "string",
+          "fullName": "string",
+          "avatar": "string",
+          "createdAt": "timestamp",
+          "updatedAt": "timestamp"
+        },
+        "rules": [
+          {
+            "allow": ["read", "write"],
+            "condition": "request.auth != null && request.auth.uid == userId"
+          }
+        ]
+      },
+      "people": {
+        "description": "Contacts/people in the directory",
+        "document_id": "auto",
+        "fields": {
+          "userId": "string",
+          "name": "string",
+          "nickname": "string",
+          "photo": "string",
+          "gender": "string",
+          "dateOfBirth": "string",
+          "location": "string",
+          "bio": "string",
+          "occupation": "string",
+          "organization": "string",
+          "department": "string",
+          "jobTitle": "string",
+          "skills": "array",
+          "education": "string",
+          "email": "string",
+          "phone": "string",
+          "website": "string",
+          "socialLinks": "array",
+          "relationshipType": "string",
+          "tags": "array",
+          "circles": "array",
+          "followUpCadenceDays": "number",
+          "customFields": "map",
+          "isFavorite": "boolean",
+          "isArchived": "boolean",
+          "createdAt": "string",
+          "updatedAt": "string",
+          "lastInteractionAt": "string"
+        },
+        "rules": [
+          {
+            "allow": ["read", "write"],
+            "condition": "request.auth != null && request.auth.uid == resource.data.userId"
+          },
+          {
+            "allow": ["create"],
+            "condition": "request.auth != null && request.auth.uid == request.resource.data.userId"
+          }
+        ]
+      },
+      "notes": {
+        "description": "Notes related to people",
+        "document_id": "auto",
+        "fields": {
+          "userId": "string",
+          "personId": "string",
+          "content": "string",
+          "tags": "array",
+          "createdAt": "string",
+          "updatedAt": "string"
+        },
+        "rules": [
+          {
+            "allow": ["read", "write"],
+            "condition": "request.auth != null && request.auth.uid == resource.data.userId"
+          },
+          {
+            "allow": ["create"],
+            "condition": "request.auth != null && request.auth.uid == request.resource.data.userId"
+          }
+        ]
+      },
+      "interactions": {
+        "description": "Interactions related to people",
+        "document_id": "auto",
+        "fields": {
+          "userId": "string",
+          "personId": "string",
+          "type": "string",
+          "date": "string",
+          "summary": "string",
+          "location": "string",
+          "sentiment": "string",
+          "createdAt": "string",
+          "updatedAt": "string"
+        },
+        "rules": [
+          {
+            "allow": ["read", "write"],
+            "condition": "request.auth != null && request.auth.uid == resource.data.userId"
+          },
+          {
+            "allow": ["create"],
+            "condition": "request.auth != null && request.auth.uid == request.resource.data.userId"
+          }
+        ]
+      },
+      "tags": {
+        "description": "Tags for categorization",
+        "document_id": "auto",
+        "fields": {
+          "userId": "string",
+          "name": "string",
+          "color": "string",
+          "description": "string",
+          "createdAt": "string"
+        },
+        "rules": [
+          {
+            "allow": ["read", "write"],
+            "condition": "request.auth != null && request.auth.uid == resource.data.userId"
+          },
+          {
+            "allow": ["create"],
+            "condition": "request.auth != null && request.auth.uid == request.resource.data.userId"
+          }
+        ]
+      },
+      "activity_logs": {
+        "description": "Logs of user actions",
+        "document_id": "auto",
+        "fields": {
+          "userId": "string",
+          "entityType": "string",
+          "entityId": "string",
+          "action": "string",
+          "details": "string",
+          "createdAt": "string"
+        },
+        "rules": [
+          {
+            "allow": ["read"],
+            "condition": "request.auth != null && request.auth.uid == resource.data.userId"
+          },
+          {
+            "allow": ["create"],
+            "condition": "request.auth != null && request.auth.uid == request.resource.data.userId"
+          }
+        ]
+      },
+      "settings": {
+        "description": "User specific app settings",
+        "document_id": "userId",
+        "fields": {
+          "appTitle": "string",
+          "ownerName": "string"
+        },
+        "rules": [
+          {
+            "allow": ["read", "write"],
+            "condition": "request.auth != null && request.auth.uid == document_id"
+          }
+        ]
+      }
+    }
+  }
+}

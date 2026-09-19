@@ -1,0 +1,657 @@
+{
+  "users": [
+    {
+      "id": "user-admin-1",
+      "username": "admin",
+      "email": "mdsahakamal016@gmail.com",
+      "passwordHash": "10a6de5a8b30a67737eb9de0d1e1ad04:5e9c4c770be35de50385f364fd44de14a3f6d9172523e85e17158468a49e4c4875fc0f01d9f7ac442a4b568c014dfe62f2fa4609757de7afeaa0ac5989fad45b",
+      "fullName": "Saha Kamal",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-08-20T06:00:00.000Z"
+    }
+  ],
+  "people": [
+    {
+      "id": "person-1",
+      "userId": "user-admin-1",
+      "name": "Rahim Ahmed",
+      "nickname": "Rahim Bhai",
+      "photo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=250&auto=format&fit=crop&q=80",
+      "gender": "Male",
+      "dateOfBirth": "1990-04-12",
+      "location": "Dhaka, Bangladesh",
+      "bio": "Senior Network Architect specializing in carrier-grade BGP routing, MPLS backbones, and MikroTik CCR deployments across metropolitan fiber networks.",
+      "occupation": "Network Engineer",
+      "organization": "ABC ISP Ltd.",
+      "department": "Core Infrastructure",
+      "jobTitle": "Lead Routing Engineer",
+      "skills": [
+        "MikroTik",
+        "BGP",
+        "Cisco",
+        "OSPF",
+        "Fiber Optics",
+        "IXP Peering"
+      ],
+      "education": "B.Sc in Computer Science & Engineering, BUET",
+      "email": "rahim.ahmed@example.com",
+      "phone": "+880 1712-345678",
+      "website": "https://rahimahmed.net",
+      "socialLinks": [
+        {
+          "id": "sl-1",
+          "platform": "linkedin",
+          "url": "https://linkedin.com/in/rahimahmed-net"
+        },
+        {
+          "id": "sl-2",
+          "platform": "github",
+          "url": "https://github.com/rahim-networks"
+        },
+        {
+          "id": "sl-3",
+          "platform": "facebook",
+          "url": "https://facebook.com/rahim.ahmed.isp"
+        }
+      ],
+      "relationshipType": "Colleague",
+      "tags": [
+        "ISP",
+        "Networking",
+        "MikroTik",
+        "Important"
+      ],
+      "circles": [
+        "Core Engineering",
+        "BUET Alumni",
+        "ISP Leaders"
+      ],
+      "followUpCadenceDays": 14,
+      "customFields": {
+        "Blood Group": "O+",
+        "Hobby": "Network Hardware Modding & Coffee",
+        "Referred By": "Direct Colleague",
+        "Preferred Channel": "WhatsApp & In-person"
+      },
+      "isFavorite": true,
+      "isArchived": false,
+      "createdAt": "2026-02-10T10:00:00.000Z",
+      "updatedAt": "2026-08-18T14:30:00.000Z",
+      "lastInteractionAt": "2026-08-18T14:30:00.000Z"
+    },
+    {
+      "id": "person-2",
+      "userId": "user-admin-1",
+      "name": "Sarah Jenkins",
+      "nickname": "Sarah",
+      "photo": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=250&auto=format&fit=crop&q=80",
+      "gender": "Female",
+      "dateOfBirth": "1993-08-25",
+      "location": "San Francisco, California",
+      "bio": "Principal UX Consultant and design system architect. Creator of accessible enterprise design tokens and user flow optimization frameworks.",
+      "occupation": "Senior UX Designer",
+      "organization": "Aura Design Studio",
+      "department": "Product Experience",
+      "jobTitle": "Principal Design Lead",
+      "skills": [
+        "Design Systems",
+        "Figma",
+        "User Research",
+        "Accessibility (WCAG)",
+        "Prototyping"
+      ],
+      "education": "M.S. in Human-Computer Interaction, Stanford",
+      "email": "sarah.jenkins@auradesign.io",
+      "phone": "+1 (415) 892-4412",
+      "website": "https://sarahjenkins.design",
+      "socialLinks": [
+        {
+          "id": "sl-4",
+          "platform": "linkedin",
+          "url": "https://linkedin.com/in/sarahjenkins-ux"
+        },
+        {
+          "id": "sl-5",
+          "platform": "twitter",
+          "url": "https://twitter.com/sarah_designs"
+        },
+        {
+          "id": "sl-6",
+          "platform": "website",
+          "url": "https://sarahjenkins.design"
+        }
+      ],
+      "relationshipType": "Client",
+      "tags": [
+        "Client",
+        "Important",
+        "Developer"
+      ],
+      "circles": [
+        "Design Advisors",
+        "VIP Clients"
+      ],
+      "followUpCadenceDays": 30,
+      "customFields": {
+        "Blood Group": "A+",
+        "Timezone": "PST (UTC-7)",
+        "Favorite Beverage": "Matcha Latte",
+        "Current Project": "Global Design Token Architecture"
+      },
+      "isFavorite": true,
+      "isArchived": false,
+      "createdAt": "2026-03-01T11:00:00.000Z",
+      "updatedAt": "2026-08-10T16:00:00.000Z",
+      "lastInteractionAt": "2026-08-10T16:00:00.000Z"
+    },
+    {
+      "id": "person-3",
+      "userId": "user-admin-1",
+      "name": "Dr. Tanvir Hossain",
+      "nickname": "Tanvir Sir",
+      "photo": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=250&auto=format&fit=crop&q=80",
+      "gender": "Male",
+      "dateOfBirth": "1975-08-28",
+      "location": "Dhaka, Bangladesh",
+      "bio": "Academic researcher and veteran professor in digital telecommunications, optical network transport layers, and wireless spectrum policy.",
+      "occupation": "Associate Professor",
+      "organization": "University of Dhaka",
+      "department": "Dept. of Electrical & Electronic Engineering",
+      "jobTitle": "Associate Professor & Research Chair",
+      "skills": [
+        "Wireless Comms",
+        "Signal Processing",
+        "Research",
+        "Optical Networks"
+      ],
+      "education": "Ph.D. in Telecommunications, NUS Singapore",
+      "email": "tanvir.hossain@du.ac.bd",
+      "phone": "+880 1819-998877",
+      "website": "https://du.ac.bd/faculty/tanvir-hossain",
+      "socialLinks": [
+        {
+          "id": "sl-7",
+          "platform": "linkedin",
+          "url": "https://linkedin.com/in/drtanvirhossain"
+        }
+      ],
+      "relationshipType": "Teacher",
+      "tags": [
+        "Mentor",
+        "Important"
+      ],
+      "circles": [
+        "Mentors & Advisors",
+        "Academic Council"
+      ],
+      "followUpCadenceDays": 21,
+      "customFields": {
+        "Blood Group": "B+",
+        "Hobby": "Vintage Radio Tech & Bengali Literature",
+        "Academic Dept": "EEE, Dhaka University",
+        "Office Hours": "Tuesday & Thursday 3 PM"
+      },
+      "isFavorite": true,
+      "isArchived": false,
+      "createdAt": "2026-01-15T09:00:00.000Z",
+      "updatedAt": "2026-07-22T11:00:00.000Z",
+      "lastInteractionAt": "2026-07-22T11:00:00.000Z"
+    },
+    {
+      "id": "person-4",
+      "userId": "user-admin-1",
+      "name": "Nusrat Jahan",
+      "nickname": "Nusrat",
+      "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=250&auto=format&fit=crop&q=80",
+      "gender": "Female",
+      "dateOfBirth": "1992-09-02",
+      "location": "Dhaka, Bangladesh",
+      "bio": "Product strategist leading high-throughput digital wallet architecture and open banking payment integrations.",
+      "occupation": "Product Manager",
+      "organization": "FinTech Pulse",
+      "department": "Digital Payments & Checkout",
+      "jobTitle": "Senior Product Manager",
+      "skills": [
+        "Product Strategy",
+        "Payment Gateways",
+        "Agile Scrum",
+        "Data Analysis",
+        "API Design"
+      ],
+      "education": "BBA in Management Information Systems, IBA DU",
+      "email": "nusrat.jahan@fintechpulse.com",
+      "phone": "+880 1911-223344",
+      "socialLinks": [
+        {
+          "id": "sl-8",
+          "platform": "linkedin",
+          "url": "https://linkedin.com/in/nusrat-jahan-pm"
+        },
+        {
+          "id": "sl-9",
+          "platform": "facebook",
+          "url": "https://facebook.com/nusrat.pulse"
+        }
+      ],
+      "relationshipType": "Professional Contact",
+      "tags": [
+        "FinTech",
+        "Business",
+        "Important"
+      ],
+      "circles": [
+        "FinTech Leaders",
+        "IBA Alumni"
+      ],
+      "followUpCadenceDays": 30,
+      "customFields": {
+        "Blood Group": "AB+",
+        "Hobby": "Public Speaking & Squash",
+        "Specialty": "Open Banking & QR Interoperability"
+      },
+      "isFavorite": false,
+      "isArchived": false,
+      "createdAt": "2026-04-10T14:00:00.000Z",
+      "updatedAt": "2026-08-05T17:00:00.000Z",
+      "lastInteractionAt": "2026-08-05T17:00:00.000Z"
+    },
+    {
+      "id": "person-5",
+      "userId": "user-admin-1",
+      "name": "Alex Rivera",
+      "nickname": "Lex",
+      "photo": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=250&auto=format&fit=crop&q=80",
+      "gender": "Male",
+      "dateOfBirth": "1994-01-30",
+      "location": "Berlin, Germany",
+      "bio": "Open-source software engineer, systems developer, and distributed databases enthusiast. Maintainer of several popular npm utility modules.",
+      "occupation": "Full Stack Engineer",
+      "organization": "CloudNova Technologies",
+      "department": "Platform Core",
+      "jobTitle": "Senior Software Engineer",
+      "skills": [
+        "TypeScript",
+        "React",
+        "PostgreSQL",
+        "Go",
+        "Docker",
+        "GraphQL"
+      ],
+      "education": "B.Sc in Computer Science, TU Munich",
+      "email": "alex@riveracodes.dev",
+      "phone": "+49 152 9018234",
+      "website": "https://riveracodes.dev",
+      "socialLinks": [
+        {
+          "id": "sl-10",
+          "platform": "github",
+          "url": "https://github.com/alexrivera-dev"
+        },
+        {
+          "id": "sl-11",
+          "platform": "twitter",
+          "url": "https://twitter.com/lex_codes"
+        }
+      ],
+      "relationshipType": "Friend",
+      "tags": [
+        "Developer",
+        "Friend"
+      ],
+      "circles": [
+        "Open Source Collaborators",
+        "Tech Founders"
+      ],
+      "followUpCadenceDays": 45,
+      "customFields": {
+        "Blood Group": "O-",
+        "Timezone": "CET (Berlin)",
+        "Key OSS Projects": "Fast-KV, TypeDrizzle-Gen"
+      },
+      "isFavorite": false,
+      "isArchived": false,
+      "createdAt": "2026-05-12T08:30:00.000Z",
+      "updatedAt": "2026-08-15T19:20:00.000Z",
+      "lastInteractionAt": "2026-08-15T19:20:00.000Z"
+    },
+    {
+      "id": "person-6",
+      "userId": "user-admin-1",
+      "name": "Tariqul Islam",
+      "nickname": "Tariq",
+      "photo": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=250&auto=format&fit=crop&q=80",
+      "gender": "Male",
+      "dateOfBirth": "1988-08-20",
+      "location": "Chattogram, Bangladesh",
+      "bio": "Operations Director with 12+ years in nationwide broadband backbone deployment, submarine cable landing stations, and enterprise NOC monitoring.",
+      "occupation": "ISP Operations Director",
+      "organization": "Bay Broadband Network",
+      "department": "Network Operations",
+      "jobTitle": "Head of Operations",
+      "skills": [
+        "NOC Management",
+        "Submarine Cable",
+        "MikroTik",
+        "BGP",
+        "Disaster Recovery"
+      ],
+      "education": "B.Sc in EEE, CUET",
+      "email": "tariqul@baybroadband.com.bd",
+      "phone": "+880 1817-112233",
+      "socialLinks": [
+        {
+          "id": "sl-12",
+          "platform": "linkedin",
+          "url": "https://linkedin.com/in/tariqul-islam-noc"
+        }
+      ],
+      "relationshipType": "Professional Contact",
+      "tags": [
+        "ISP",
+        "Networking",
+        "MikroTik",
+        "Business"
+      ],
+      "circles": [
+        "ISP Leaders",
+        "CUET Alumni"
+      ],
+      "followUpCadenceDays": 14,
+      "customFields": {
+        "Blood Group": "B+",
+        "Specialty": "SMW4 & SMW5 Submarine Landing Stations",
+        "Emergency NOC Phone": "+880 1817-990011"
+      },
+      "isFavorite": true,
+      "isArchived": false,
+      "createdAt": "2026-03-20T10:15:00.000Z",
+      "updatedAt": "2026-08-12T11:45:00.000Z",
+      "lastInteractionAt": "2026-08-12T11:45:00.000Z"
+    },
+    {
+      "id": "person-7",
+      "userId": "user-admin-1",
+      "name": "Marcus Vance",
+      "nickname": "Marc",
+      "photo": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=250&auto=format&fit=crop&q=80",
+      "gender": "Male",
+      "dateOfBirth": "1985-03-14",
+      "location": "Austin, Texas",
+      "bio": "Independent infrastructure consultant advising startups on cloud migration, Kubernetes clusters, and automated Terraform CI/CD pipelines.",
+      "occupation": "DevOps Consultant",
+      "organization": "Vance Cloud Advisory",
+      "department": "Consulting",
+      "jobTitle": "Principal Cloud Architect",
+      "skills": [
+        "Kubernetes",
+        "Terraform",
+        "AWS",
+        "CI/CD",
+        "Security Auditing"
+      ],
+      "education": "B.S. in Software Engineering, UT Austin",
+      "email": "marcus@vancecloud.com",
+      "phone": "+1 (512) 555-0199",
+      "socialLinks": [
+        {
+          "id": "sl-13",
+          "platform": "linkedin",
+          "url": "https://linkedin.com/in/marcusvance"
+        },
+        {
+          "id": "sl-14",
+          "platform": "github",
+          "url": "https://github.com/mvance-cloud"
+        }
+      ],
+      "relationshipType": "Colleague",
+      "tags": [
+        "Developer",
+        "Business"
+      ],
+      "isFavorite": false,
+      "isArchived": true,
+      "createdAt": "2026-01-20T15:00:00.000Z",
+      "updatedAt": "2026-04-12T18:00:00.000Z",
+      "lastInteractionAt": "2026-04-12T18:00:00.000Z"
+    }
+  ],
+  "tags": [
+    {
+      "id": "tag-1",
+      "name": "ISP",
+      "color": "#0284c7",
+      "description": "Internet Service Provider domain",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-2",
+      "name": "Networking",
+      "color": "#059669",
+      "description": "Core routing and switching",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-3",
+      "name": "MikroTik",
+      "color": "#ea580c",
+      "description": "RouterOS & MikroTik hardware",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-4",
+      "name": "Developer",
+      "color": "#7c3aed",
+      "description": "Software and web engineers",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-5",
+      "name": "Friend",
+      "color": "#db2777",
+      "description": "Personal close friends",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-6",
+      "name": "Client",
+      "color": "#ca8a04",
+      "description": "Business customers & clients",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-7",
+      "name": "Business",
+      "color": "#4b5563",
+      "description": "Business & commercial contacts",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-8",
+      "name": "Important",
+      "color": "#dc2626",
+      "description": "High-priority VIP contacts",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-9",
+      "name": "Mentor",
+      "color": "#0891b2",
+      "description": "Advisors and mentors",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "tag-10",
+      "name": "FinTech",
+      "color": "#16a34a",
+      "description": "Financial technology industry",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-1",
+      "personId": "person-1",
+      "personName": "Rahim Ahmed",
+      "content": "Interested in MikroTik CCR2004 series for the new 10G uplink aggregations. Highly knowledgeable in BGP path prepending and AS prepending tricks.",
+      "createdAt": "2026-08-18T14:35:00.000Z",
+      "updatedAt": "2026-08-18T14:35:00.000Z"
+    },
+    {
+      "id": "note-2",
+      "personId": "person-1",
+      "personName": "Rahim Ahmed",
+      "content": "Works with core ISP networking and IXP peering in Dhaka. Discussed routing project collaboration for upcoming National Data Center interconnection.",
+      "createdAt": "2026-08-10T11:20:00.000Z",
+      "updatedAt": "2026-08-10T11:20:00.000Z"
+    },
+    {
+      "id": "note-3",
+      "personId": "person-2",
+      "personName": "Sarah Jenkins",
+      "content": "Prefers communicating via async Figma comments and weekly summaries. Highly focused on WCAG AA compliance for color contrast and font scaling.",
+      "createdAt": "2026-08-10T16:05:00.000Z",
+      "updatedAt": "2026-08-10T16:05:00.000Z"
+    },
+    {
+      "id": "note-4",
+      "personId": "person-3",
+      "personName": "Dr. Tanvir Hossain",
+      "content": "Advised during final year graduation thesis. Always happy to offer insights on telecommunication policy and academic paper reviews.",
+      "createdAt": "2026-07-22T11:05:00.000Z",
+      "updatedAt": "2026-07-22T11:05:00.000Z"
+    },
+    {
+      "id": "note-5",
+      "personId": "person-6",
+      "personName": "Tariqul Islam",
+      "content": "Has direct contacts with submarine cable operators in Chattogram. Great resource for reliable nationwide IP transit quotes.",
+      "createdAt": "2026-08-12T11:50:00.000Z",
+      "updatedAt": "2026-08-12T11:50:00.000Z"
+    }
+  ],
+  "interactions": [
+    {
+      "id": "inter-1",
+      "personId": "person-1",
+      "personName": "Rahim Ahmed",
+      "type": "Meeting",
+      "date": "2026-08-18",
+      "description": "Discussed ISP core network upgrade and BGP peering table expansion.",
+      "notes": "Reviewed MikroTik CCR router configurations and agreed to review peering SLA next Tuesday.",
+      "createdAt": "2026-08-18T14:30:00.000Z"
+    },
+    {
+      "id": "inter-2",
+      "personId": "person-5",
+      "personName": "Alex Rivera",
+      "type": "Message",
+      "date": "2026-08-15",
+      "description": "Discussed modern TypeScript 5.8 patterns and shared open source database utilities.",
+      "notes": "Shared repository link and exchanged tips on caching layer design.",
+      "createdAt": "2026-08-15T19:20:00.000Z"
+    },
+    {
+      "id": "inter-3",
+      "personId": "person-6",
+      "personName": "Tariqul Islam",
+      "type": "Phone Call",
+      "date": "2026-08-12",
+      "description": "Follow-up on fiber optic ring redundancy test results in Chattogram region.",
+      "notes": "Test completed with 0% packet loss during simulated fiber cut switchover.",
+      "createdAt": "2026-08-12T11:45:00.000Z"
+    },
+    {
+      "id": "inter-4",
+      "personId": "person-2",
+      "personName": "Sarah Jenkins",
+      "type": "Online Meeting",
+      "date": "2026-08-10",
+      "description": "Quarterly design system review and feedback session via Google Meet.",
+      "notes": "Approved the new typography hierarchy and dark mode color palette.",
+      "createdAt": "2026-08-10T16:00:00.000Z"
+    },
+    {
+      "id": "inter-5",
+      "personId": "person-4",
+      "personName": "Nusrat Jahan",
+      "type": "Meeting",
+      "date": "2026-08-05",
+      "description": "Coffee catch-up at Gulshan 2 to discuss digital banking API trends in South Asia.",
+      "notes": "Discussed upcoming Bangladesh Bank interoperable QR code payment initiatives.",
+      "createdAt": "2026-08-05T17:00:00.000Z"
+    },
+    {
+      "id": "inter-6",
+      "personId": "person-3",
+      "personName": "Dr. Tanvir Hossain",
+      "type": "Phone Call",
+      "date": "2026-07-22",
+      "description": "Wished on Eid festival and discussed recent academic paper on 5G wireless spectrum.",
+      "notes": "Exchanged warm regards and agreed to meet during next university reunion.",
+      "createdAt": "2026-07-22T11:00:00.000Z"
+    }
+  ],
+  "activityLogs": [
+    {
+      "id": "act-1787255913025-wtx5q",
+      "userId": "user-admin-1",
+      "action": "DATABASE_RESET",
+      "entityType": "system",
+      "entityName": "System Database",
+      "details": "Reset database to default seed records",
+      "timestamp": "2026-08-20T19:58:33.025Z"
+    },
+    {
+      "id": "act-1",
+      "userId": "user-admin-1",
+      "action": "INTERACTION_ADDED",
+      "entityType": "interaction",
+      "entityId": "inter-1",
+      "entityName": "Rahim Ahmed",
+      "details": "Logged a Meeting interaction regarding ISP core routing",
+      "timestamp": "2026-08-18T14:30:00.000Z"
+    },
+    {
+      "id": "act-2",
+      "userId": "user-admin-1",
+      "action": "NOTE_ADDED",
+      "entityType": "note",
+      "entityId": "note-1",
+      "entityName": "Rahim Ahmed",
+      "details": "Added note about MikroTik CCR2004 routers",
+      "timestamp": "2026-08-18T14:35:00.000Z"
+    },
+    {
+      "id": "act-3",
+      "userId": "user-admin-1",
+      "action": "INTERACTION_ADDED",
+      "entityType": "interaction",
+      "entityId": "inter-2",
+      "entityName": "Alex Rivera",
+      "details": "Logged a Message interaction regarding TypeScript updates",
+      "timestamp": "2026-08-15T19:20:00.000Z"
+    },
+    {
+      "id": "act-4",
+      "userId": "user-admin-1",
+      "action": "PERSON_ADDED",
+      "entityType": "person",
+      "entityId": "person-6",
+      "entityName": "Tariqul Islam",
+      "details": "Added new contact Tariqul Islam (Bay Broadband Network)",
+      "timestamp": "2026-08-12T11:40:00.000Z"
+    },
+    {
+      "id": "act-5",
+      "userId": "user-admin-1",
+      "action": "FAVORITE_TOGGLED",
+      "entityType": "person",
+      "entityId": "person-1",
+      "entityName": "Rahim Ahmed",
+      "details": "Marked Rahim Ahmed as Favorite",
+      "timestamp": "2026-08-10T10:00:00.000Z"
+    }
+  ]
+}
