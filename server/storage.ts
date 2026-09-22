@@ -415,6 +415,31 @@ export class StorageService {
       people = people.filter(p => p.relationshipType === params.relationship);
     }
 
+    const now = new Date();
+    if (params.needsFollowUp) {
+      people = people.filter((p) => {
+        const cadence = p.followUpCadenceDays || (p.isFavorite ? 14 : 30);
+        const lastTouch = p.lastInteractionAt ? new Date(p.lastInteractionAt) : new Date(p.createdAt);
+        const daysSince = Math.floor((now.getTime() - lastTouch.getTime()) / (1000 * 60 * 60 * 24));
+        return daysSince >= cadence;
+      });
+    }
+
+    if (params.upcomingBirthday) {
+      people = people.filter((p) => {
+        if (!p.dateOfBirth) return false;
+        const bday = new Date(p.dateOfBirth);
+        if (isNaN(bday.getTime())) return false;
+        const currentYear = now.getFullYear();
+        let nextBday = new Date(currentYear, bday.getMonth(), bday.getDate());
+        if (nextBday < new Date(currentYear, now.getMonth(), now.getDate())) {
+          nextBday = new Date(currentYear + 1, bday.getMonth(), bday.getDate());
+        }
+        const diffDays = Math.ceil((nextBday.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+        return diffDays >= 0 && diffDays <= 30;
+      });
+    }
+
     const sortBy = params.sortBy || 'name';
     const sortOrder = params.sortOrder || 'asc';
     people.sort((a: any, b: any) => {
@@ -840,6 +865,18 @@ export class StorageService {
   // --- Phase 1: Health & Emergency ---
 
   public async getHealthProfile(personId: string, userId: string) {
+    if (!db) {
+      return { 
+        id: personId, 
+        personId: personId, 
+        bloodGroup: '', 
+        bloodGroupPrivacy: 'private',
+        notes: '',
+        userId: userId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+    }
     const d = await getDoc(doc(db, 'health_profiles', personId));
     if (!d.exists()) {
       return { 
@@ -857,6 +894,7 @@ export class StorageService {
   }
 
   public async updateHealthProfile(personId: string, userId: string, data: any) {
+    if (!db) return data;
     const ref = doc(db, 'health_profiles', personId);
     const d = await getDoc(ref);
     let updated;
@@ -878,6 +916,7 @@ export class StorageService {
   }
 
   public async getMedicines(personId: string, userId: string) {
+    if (!db) return [];
     const q = query(collection(db, 'medicines'), where('personId', '==', personId));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() as any }));
@@ -890,11 +929,12 @@ export class StorageService {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-    await setDoc(doc(db, 'medicines', id), removeUndefined(med));
+    if (db) await setDoc(doc(db, 'medicines', id), removeUndefined(med));
     return med;
   }
   
   public async updateMedicine(id: string, userId: string, data: any) {
+    if (!db) return data;
     const ref = doc(db, 'medicines', id);
     const d = await getDoc(ref);
     if (!d.exists()) return null;
@@ -904,11 +944,13 @@ export class StorageService {
   }
 
   public async deleteMedicine(id: string, userId: string) {
+    if (!db) return false;
     await deleteDoc(doc(db, 'medicines', id));
     return true;
   }
 
   public async getAllergies(personId: string, userId: string) {
+    if (!db) return [];
     const q = query(collection(db, 'allergies'), where('personId', '==', personId));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() as any }));
@@ -921,11 +963,12 @@ export class StorageService {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-    await setDoc(doc(db, 'allergies', id), removeUndefined(allergy));
+    if (db) await setDoc(doc(db, 'allergies', id), removeUndefined(allergy));
     return allergy;
   }
 
   public async updateAllergy(id: string, userId: string, data: any) {
+    if (!db) return data;
     const ref = doc(db, 'allergies', id);
     const d = await getDoc(ref);
     if (!d.exists()) return null;
@@ -935,11 +978,13 @@ export class StorageService {
   }
 
   public async deleteAllergy(id: string, userId: string) {
+    if (!db) return false;
     await deleteDoc(doc(db, 'allergies', id));
     return true;
   }
 
   public async getEmergencyContacts(personId: string, userId: string) {
+    if (!db) return [];
     const q = query(collection(db, 'emergency_contacts'), where('personId', '==', personId));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() as any }));
@@ -952,11 +997,12 @@ export class StorageService {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
-    await setDoc(doc(db, 'emergency_contacts', id), removeUndefined(contact));
+    if (db) await setDoc(doc(db, 'emergency_contacts', id), removeUndefined(contact));
     return contact;
   }
 
   public async updateEmergencyContact(id: string, userId: string, data: any) {
+    if (!db) return data;
     const ref = doc(db, 'emergency_contacts', id);
     const d = await getDoc(ref);
     if (!d.exists()) return null;
@@ -966,6 +1012,7 @@ export class StorageService {
   }
 
   public async deleteEmergencyContact(id: string, userId: string) {
+    if (!db) return false;
     await deleteDoc(doc(db, 'emergency_contacts', id));
     return true;
   }
@@ -973,16 +1020,18 @@ export class StorageService {
   // --- Phase 2-5 CRUD ---
   // Finance
   public async getTransactions(personId: string) {
+    if (!db) return [];
     const snap = await getDocs(query(collection(db, 'finance_transactions'), where('personId', '==', personId)));
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
   public async addTransaction(personId: string, data: any) {
     const id = 'txn-' + crypto.randomUUID();
     const docData = { id, personId, ...data, paidAmount: 0, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-    await setDoc(doc(db, 'finance_transactions', id), removeUndefined(docData));
+    if (db) await setDoc(doc(db, 'finance_transactions', id), removeUndefined(docData));
     return docData;
   }
   public async updateTransaction(id: string, data: any) {
+    if (!db) return data;
     const ref = doc(db, 'finance_transactions', id);
     const d = await getDoc(ref);
     if (!d.exists()) return null;
@@ -991,88 +1040,99 @@ export class StorageService {
     return updated;
   }
   public async deleteTransaction(id: string) {
+    if (!db) return false;
     await deleteDoc(doc(db, 'finance_transactions', id));
     return true;
   }
   public async addPayment(transactionId: string, data: any) {
     const id = 'pay-' + crypto.randomUUID();
     const docData = { id, transactionId, ...data, createdAt: new Date().toISOString() };
-    await setDoc(doc(db, 'transaction_payments', id), removeUndefined(docData));
-    
-    // Update transaction paidAmount
-    const tRef = doc(db, 'finance_transactions', transactionId);
-    const tDoc = await getDoc(tRef);
-    if (tDoc.exists()) {
-      const t = tDoc.data();
-      const newPaid = (t.paidAmount || 0) + Number(data.amount || 0);
-      let status = t.status;
-      if (newPaid >= t.amount) status = 'Settled';
-      else if (newPaid > 0) status = 'Partially Settled';
-      await setDoc(tRef, removeUndefined({ ...t, paidAmount: newPaid, status, updatedAt: new Date().toISOString() }));
+    if (db) {
+      await setDoc(doc(db, 'transaction_payments', id), removeUndefined(docData));
+      
+      // Update transaction paidAmount
+      const tRef = doc(db, 'finance_transactions', transactionId);
+      const tDoc = await getDoc(tRef);
+      if (tDoc.exists()) {
+        const t = tDoc.data();
+        const newPaid = (t.paidAmount || 0) + Number(data.amount || 0);
+        let status = t.status;
+        if (newPaid >= t.amount) status = 'Settled';
+        else if (newPaid > 0) status = 'Partially Settled';
+        await setDoc(tRef, removeUndefined({ ...t, paidAmount: newPaid, status, updatedAt: new Date().toISOString() }));
+      }
     }
     return docData;
   }
 
   // Vault
   public async getDocuments(personId: string) {
+    if (!db) return [];
     const snap = await getDocs(query(collection(db, 'personal_documents'), where('personId', '==', personId)));
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
   public async addDocument(personId: string, data: any) {
     const id = 'doc-' + crypto.randomUUID();
     const docData = { id, personId, ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-    await setDoc(doc(db, 'personal_documents', id), removeUndefined(docData));
+    if (db) await setDoc(doc(db, 'personal_documents', id), removeUndefined(docData));
     return docData;
   }
   public async deleteDocument(id: string) {
+    if (!db) return false;
     await deleteDoc(doc(db, 'personal_documents', id));
     return true;
   }
 
   // Events
   public async getEvents(personId: string) {
+    if (!db) return [];
     const snap = await getDocs(query(collection(db, 'personal_events'), where('personId', '==', personId)));
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
   public async addEvent(personId: string, data: any) {
     const id = 'evt-' + crypto.randomUUID();
     const docData = { id, personId, ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-    await setDoc(doc(db, 'personal_events', id), removeUndefined(docData));
+    if (db) await setDoc(doc(db, 'personal_events', id), removeUndefined(docData));
     return docData;
   }
   public async deleteEvent(id: string) {
+    if (!db) return false;
     await deleteDoc(doc(db, 'personal_events', id));
     return true;
   }
 
   // Gifts
   public async getGifts(personId: string) {
+    if (!db) return [];
     const snap = await getDocs(query(collection(db, 'gift_history'), where('personId', '==', personId)));
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
   public async addGift(personId: string, data: any) {
     const id = 'gft-' + crypto.randomUUID();
     const docData = { id, personId, ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-    await setDoc(doc(db, 'gift_history', id), removeUndefined(docData));
+    if (db) await setDoc(doc(db, 'gift_history', id), removeUndefined(docData));
     return docData;
   }
   public async deleteGift(id: string) {
+    if (!db) return false;
     await deleteDoc(doc(db, 'gift_history', id));
     return true;
   }
 
   // Preferences
   public async getPreferences(personId: string) {
+    if (!db) return [];
     const snap = await getDocs(query(collection(db, 'personal_preferences'), where('personId', '==', personId)));
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
   public async addPreference(personId: string, data: any) {
     const id = 'pref-' + crypto.randomUUID();
     const docData = { id, personId, ...data, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-    await setDoc(doc(db, 'personal_preferences', id), removeUndefined(docData));
+    if (db) await setDoc(doc(db, 'personal_preferences', id), removeUndefined(docData));
     return docData;
   }
   public async deletePreference(id: string) {
+    if (!db) return false;
     await deleteDoc(doc(db, 'personal_preferences', id));
     return true;
   }

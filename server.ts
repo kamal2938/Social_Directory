@@ -746,8 +746,16 @@ async function startServer() {
   // PHASE 1: HEALTH & EMERGENCY
   // ==========================================
   app.get('/api/people/:id/health', authMiddleware, async (req: Request, res: Response) => {
-    const userId = (req as any).userId;
-    res.json(await storage.getHealthProfile(req.params.id, userId));
+    try {
+      const userId = (req as any).userId;
+      const profile = await storage.getHealthProfile(req.params.id, userId);
+      const medicines = await storage.getMedicines(req.params.id, userId);
+      const allergies = await storage.getAllergies(req.params.id, userId);
+      const emergencyContacts = await storage.getEmergencyContacts(req.params.id, userId);
+      res.json({ profile, medicines, allergies, emergencyContacts });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
   });
   app.post('/api/people/:id/health', authMiddleware, async (req: Request, res: Response) => {
     const userId = (req as any).userId;

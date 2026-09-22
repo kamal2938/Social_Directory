@@ -108,6 +108,22 @@
     background-color: #0b0f19;
     color: #f8fafc;
   }
+
+  input, textarea, select {
+    color: #0f172a;
+  }
+
+  .dark input, .dark textarea, .dark select {
+    color: #f8fafc;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #94a3b8;
+  }
+
+  .dark input::placeholder, .dark textarea::placeholder {
+    color: #64748b;
+  }
 }
 
 .scrollbar-hide::-webkit-scrollbar {

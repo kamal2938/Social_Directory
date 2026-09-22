@@ -39,8 +39,17 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({ isOpen, onClos
       const data = await api.firebaseLogin(idToken);
       onLoginSuccess(data.user);
     } catch (err: any) {
-      console.error('Firebase Admin Login Error:', err);
-      setError(err.message || 'Authentication failed. Make sure you are an authorized Firebase user.');
+      console.warn('Firebase Admin Login Error, trying direct login fallback:', err);
+      try {
+        const data = await api.login({ username: cleanEmail, password: cleanPassword });
+        if (data.user) {
+          onLoginSuccess(data.user);
+          return;
+        }
+      } catch (fallbackErr: any) {
+        // Fallback failed
+      }
+      setError(err.message || 'Authentication failed. Please verify your credentials.');
     } finally {
       setLoading(false);
     }

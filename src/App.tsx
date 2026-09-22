@@ -649,7 +649,7 @@ export default function App() {
 
           {activeTab === 'profile' && (
             <ProfileView
-             
+              currentUserId={currentUser?.id}
               isAdmin={currentUser?.role === 'admin'}
               lang={lang}
               onClose={() => setActiveTab('people')}
